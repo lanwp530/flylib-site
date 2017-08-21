@@ -17,7 +17,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<!-- spring版本号 -->
-		<spring.version>4.2.6.RELEASE</spring.version>
+		<spring.version>4.3.3.RELEASE</spring.version>
 		<mybatis.version>3.2.4</mybatis.version>
 	</properties>
 
@@ -79,6 +79,11 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.24</version>
+		</dependency>
+		<dependency>
+			<groupId>org.flylib</groupId>
+			<artifactId>flylib-passport</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
