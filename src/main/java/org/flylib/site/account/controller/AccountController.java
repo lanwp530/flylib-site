@@ -1,7 +1,6 @@
 package org.flylib.site.account.controller;
 
-import org.flylib.passport.annotation.Auth;
-import org.flylib.passport.controller.Authed;
+import org.flylib.passport.annotation.AuthController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 */
 @RequestMapping("account")
 @Controller
-@Auth
-public class AccountController implements Authed {
+@AuthController
+public class AccountController {
 	@RequestMapping("login")
 	@ResponseBody
 	public String login(String userId, String token) {
