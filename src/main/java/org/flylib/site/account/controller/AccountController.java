@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @AuthController
 public class AccountController {
-	@RequestMapping("login")
+	@RequestMapping("getInfo")
 	@ResponseBody
-	public String login(String userId, String token) {
-		return "login success.";
+	public String getInfo(String userId, String token) {
+		
+		return "getInfo success.";
 	}
 }
