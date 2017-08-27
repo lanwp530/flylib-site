@@ -1,4 +1,9 @@
 # flylib-site
+- 技术架构： 
+1.Spring Boot 
+2.maven
+3.flylib-passport登录模块
+
 测试环境部署 <br/>
 
 http://localhost:20100/passport/register
