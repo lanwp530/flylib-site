@@ -10,4 +10,8 @@
 		INSERT INTO fly_token( user_id, token, expire, create_time, update_time )
 		VALUES (#{userId}, #{token}, #{expire}, NOW(), NOW())
 	</insert>
+	
+	<update id="updateToken" parameterType="Map">
+		UPDATE fly_token SET token=#{token} WHERE user_id=#{userId}
+	</update>
 </mapper>

@@ -1,5 +1,6 @@
 package org.flylib.site.biz.service;
 
+import org.flylib.passport.service.TokenDBService;
 import org.flylib.passport.service.TokenService;
 import org.flylib.site.biz.dao.UserDAO;
 import org.flylib.site.constant.AccountType;
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import org.flylib.passport.constant.MobResponseCode;
+import org.flylib.passport.constant.AuthResponseCode;
 
 /** 
 * @author Frank Liu(liushaomingdev@163.com)
@@ -31,42 +32,53 @@ public class LoginService {
 	@Autowired
 	private TokenService tokenService;
 	
+	@Autowired
+	private TokenDBService tokenDBService;
+	
 	public LoginResult register(String username, String password, Integer accountType) {
 		User user = new User();
 		LoginResult loginResult = new LoginResult();
 		boolean exist = existUsername(username, accountType);
+		boolean registerSuccess = false;
 		if (exist) {
 			System.out.println("This user exists! " + username);
 			logger.info("This user exists! username={}", username);
 			loginResult.setUserId(0L);
 			loginResult.setToken("");
 			loginResult.setUsername(username);
-			loginResult.setCode(MobResponseCode.USER_REPEAT);
-			loginResult.setCodeDesc(MobResponseCode.USER_REPEAT_DESC);
+			loginResult.setCode(AuthResponseCode.USER_REPEAT);
+			loginResult.setCodeDesc(AuthResponseCode.USER_REPEAT_DESC);
 		} else {
 			String encodedPassword = MD5Util.md5(password).toLowerCase();
 			user.setPassword(encodedPassword);
-			setUsername(username, accountType, user);
-			user.setStatus(UserStatus.active);
-			int insertedCount = userDAO.insert(user);
-			Long userId = user.getId();
-			
-			if (insertedCount == 1) {
-				// 产生token并存入数据库
-				String token = MD5Util.md5(DateTool.getTime() + password).toLowerCase();
-				Integer count = tokenService.insert(userId, token, tokenExpire);
+			boolean setSuccess = setUsername(username, accountType, user);
+			int insertedCount = 0;
+			if (setSuccess) {
+				user.setStatus(UserStatus.active);
+				insertedCount = userDAO.insert(user);
+				Long userId = user.getId();
 				
-				loginResult.setUserId(userId);
-				loginResult.setToken(token);
-				loginResult.setUsername(username);
-				loginResult.setCode(MobResponseCode.SUCCESS);
-				loginResult.setCodeDesc(MobResponseCode.SUCCESS_DESC);
-			} else {
-				loginResult.setUserId(userId);
+				if (insertedCount == 1) {
+					// 产生token并存入数据库
+					String token = MD5Util.md5(DateTool.getTime() + password).toLowerCase();
+					Integer count = tokenService.insert(userId, token, tokenExpire);
+					if (count > 0) {
+						loginResult.setUserId(userId);
+						loginResult.setToken(token);
+						loginResult.setUsername(username);
+						loginResult.setCode(AuthResponseCode.SUCCESS);
+						loginResult.setCodeDesc(AuthResponseCode.SUCCESS_DESC);
+						registerSuccess = true;
+					}
+					
+				} 
+			} 
+			if (!registerSuccess) {
+				loginResult.setUserId(0L);
 				loginResult.setToken("");
 				loginResult.setUsername(username);
-				loginResult.setCode(MobResponseCode.USERCENTER_ERROR);
-				loginResult.setCodeDesc(MobResponseCode.USERCENTER_ERROR_DESC);
+				loginResult.setCode(AuthResponseCode.USER_REGISTER_FAILED);
+				loginResult.setCodeDesc(AuthResponseCode.USER_REGISTER_FAILED_DESC);
 			}
 		}
 		
@@ -91,17 +103,20 @@ public class LoginService {
 		}
 		passwordInDB = user.getPassword();
 		Long userId = user.getId();
-		String code = MobResponseCode.USERCENTER_ERROR;
+		String code = AuthResponseCode.USERCENTER_ERROR;
+		String desc = AuthResponseCode.USERCENTER_ERROR_DESC;
 		String token = "";
 		if (encodedPassword.equals(passwordInDB)) {
-			token = tokenService.getToken(userId);
-			code = MobResponseCode.SUCCESS;
+			token = tokenService.copyTokenToCache(userId);
+			code = AuthResponseCode.SUCCESS;
+			desc = AuthResponseCode.SUCCESS_DESC;
 		} 
 		LoginResult loginResult = new LoginResult();
 		loginResult.setUserId(userId);
 		loginResult.setToken(token);
 		loginResult.setUsername(username);
 		loginResult.setCode(code);
+		loginResult.setCodeDesc(desc);
 		return loginResult;
 	}
 	
@@ -125,21 +140,28 @@ public class LoginService {
 		return exist;
 	}
 	
-	private void setUsername(String username, Integer accountType, User user) {
+	private boolean setUsername(String username, Integer accountType, User user) {
+		boolean success = false;
 		switch (accountType) {
 		case AccountType.MOBILE :
 			if (username.length() == 11 && username.charAt(0) == '1') {
 				user.setMobile(username);
+				success = true;
+			} else {
+				logger.info("手机号不合法,mobile number is invalid,value={}", username);
 			}
 			break;
 		case AccountType.EMAIL : 
 			if (username.contains("@")) {
 				user.setEmail(username);	
+				success = true;
 			}
 			break;
 		case AccountType.WECHAT :
 			user.setOpenid(username);
+			success = true;
 			break;
 		}
+		return success;
 	}
 }

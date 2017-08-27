@@ -27,7 +27,10 @@
           		<ref bean="loginIntercepter"/> 
        	</mvc:interceptor>
      </mvc:interceptors> 
-	
+     
+      <bean id="redisClient" class="org.flylib.passport.redis.RedisClient">
+    	<property name="jedisPool" ref="jedisPool"/>
+    </bean>
 	
 	<!-- 	==================flylib jar包对应的配置====END===================================== -->
 	
@@ -52,11 +55,6 @@
         <constructor-arg name="password" value="#{'${redis.password}'!=''?'${redis.password}':null}" />
         <constructor-arg name="database" value="${redis.db.index}" type="int" />
     </bean>
-    
-    <bean id="redisClient" class="org.flylib.passport.redis.RedisClient">
-    	<property name="jedisPool" ref="jedisPool"/>
-    </bean>
-    
     <!-- 	==================redis END========================================= -->
 
 </beans>
