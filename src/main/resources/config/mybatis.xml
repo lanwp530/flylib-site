@@ -3,6 +3,7 @@
 <configuration>
     <!-- 在这个文件放置一些全局性的配置 -->
     <typeAliases>
-<!--         <typeAlias type="com.x.model.Product" alias="Product"/> -->
+        <typeAlias type="org.flylib.passport.model.Token" alias="Token"/>
+        <typeAlias type="org.flylib.site.model.User" alias="User"/>
     </typeAliases>
 </configuration>

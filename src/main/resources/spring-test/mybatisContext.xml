@@ -50,7 +50,7 @@
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="org.flylib.site.*.dao" />
+		<property name="basePackage" value="org.flylib.passport.dao,org.flylib.site.*.dao" />
 <!-- 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" /> -->
 	</bean>
 

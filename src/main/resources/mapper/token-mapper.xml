@@ -3,7 +3,7 @@
 <!-- create by autoCode,v1.0.0 -->
 <mapper namespace="org.flylib.passport.dao.TokenDAO">
 	<select id="getToken" resultType="String" parameterType="Map">
-		SELECT token FROM token WHERE user_id=#{userId} LIMIT 1
+		SELECT token FROM fly_token WHERE user_id=#{userId} LIMIT 1
 	</select>	
 	
 	<insert id="insert" parameterType="Map">

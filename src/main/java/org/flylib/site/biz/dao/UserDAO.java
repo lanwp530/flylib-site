@@ -1,6 +1,7 @@
 package org.flylib.site.biz.dao;
 
-import org.flylib.passport.model.User;
+import org.apache.ibatis.annotations.Param;
+import org.flylib.site.model.User;
 
 /** 
 * @author Frank Liu(liushaomingdev@163.com)
@@ -9,7 +10,7 @@ import org.flylib.passport.model.User;
 */
 public interface UserDAO {
 	Integer insert(User user);
-	User getUserByMobile(String mobile);
-	User getUserByEmail(String mobile);
+	User getUserByMobile(@Param("mobile") String mobile);
+	User getUserByEmail(@Param("email") String email);
 	
 }

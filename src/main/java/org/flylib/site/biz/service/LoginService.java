@@ -1,11 +1,11 @@
 package org.flylib.site.biz.service;
 
-import org.flylib.passport.model.User;
 import org.flylib.passport.service.TokenService;
 import org.flylib.site.biz.dao.UserDAO;
 import org.flylib.site.constant.AccountType;
 import org.flylib.site.constant.UserStatus;
 import org.flylib.site.model.LoginResult;
+import org.flylib.site.model.User;
 import org.flylib.site.util.DateTool;
 import org.flylib.site.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
