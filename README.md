@@ -1,8 +1,8 @@
 # flylib-site
 - 技术架构： 
-1.Spring Boot 
-2.maven
-3.flylib-passport登录模块
+1.Spring Boot + myBatis <br/>
+2.maven <br/>
+3.flylib-passport登录模块 <br/>
 
 测试环境部署 <br/>
 
