@@ -10,7 +10,14 @@ public class LoginResult {
 	private String token;
 	private String username;
 	private String code;
+	private String codeDesc;
 	
+	public String getCodeDesc() {
+		return codeDesc;
+	}
+	public void setCodeDesc(String codeDesc) {
+		this.codeDesc = codeDesc;
+	}
 	public String getCode() {
 		return code;
 	}

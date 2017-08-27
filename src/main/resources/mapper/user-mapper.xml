@@ -46,4 +46,8 @@
 	<select id="getUserByEmail" parameterType="map" resultMap="userResultMap">
 		SELECT * FROM fly_user WHERE email=#{email} LIMIT 1
 	</select>
+	
+	<select id="exist" parameterType="Map" resultType="Integer" statementType="STATEMENT">
+		SELECT COUNT(*) FROM fly_user WHERE ${field}=${fieldValue}
+	</select>
 </mapper>
