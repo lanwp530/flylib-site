@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/context                http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<import resource="mybatisContext.xml" />
-	<context:property-placeholder ignore-unresolvable="true" location="classpath:property-test/*.properties"/>
+	<context:property-placeholder ignore-unresolvable="true" location="classpath:property/*.properties"/>
 	
 <!-- 	==================flylib jar包对应的配置========================================= -->
 <!-- 	<context:component-scan base-package="org.flylib.passport.intercepter"></context:component-scan> -->

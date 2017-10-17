@@ -11,7 +11,7 @@ http://localhost:20100/passport/register
 注册账号--
 <a href="http://localhost:20100/passport/register?username=13011111111&password=123456&accountType=1">http://localhost:20100/passport/register?username=13011111111&password=123456&accountType=1</a>
 <br/>
-登录--
+用手机号作为用户名登录--
 <br/>
 <a href="http://localhost:20100/passport/login?username=13011111111&password=123456&accountType=1">
 http://localhost:20100/passport/login?username=13011111111&password=123456&accountType=1
