@@ -6,6 +6,9 @@
 
 - 接口测试 <br/>
 
+先mvn package
+然后， 运行deploy/start.sh （这个脚本在源码的deploy文件夹下）
+
 http://localhost:20100/passport/register
 下面是一些测试url<br/>
 注册账号--
